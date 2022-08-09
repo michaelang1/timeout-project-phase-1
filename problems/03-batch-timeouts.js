@@ -5,10 +5,10 @@ callback in the array with its corresponding delay. For example, the
 callback at index 0 should be set with the delay at index 0,
 the callback at index 1 should be set with the delay at index 1, and so on.
 The `batchTimeouts` function should return an array containing the Timeout
-objects for each timeout that was set. You may assume that both array arguments 
+objects for each timeout that was set. You may assume that both array arguments
 have the same length.
 
-In addition to Mocha, we recommend that you test your code manually using 
+In addition to Mocha, we recommend that you test your code manually using
 node with the examples below to confirm the correct behavior.
 
 Note: The test specs for this problem are valid for iterative solutions. If you
@@ -23,8 +23,8 @@ const shout = () => console.log('WHAT?');
 const tasks = [sayHello, sayGoodbye, shout];
 const delays = [500, 200, 900];
 
-const timeoutObjs = batchTimeouts(tasks, delays); 
-// should print: 
+const timeoutObjs = batchTimeouts(tasks, delays);
+// should print:
 //  'bye' after 200 ms
 //  'hi' after 500 ms
 //  'WHAT?' after 900 ms
@@ -32,13 +32,36 @@ const timeoutObjs = batchTimeouts(tasks, delays);
 console.log(timeoutObjs); // [ Timeout {...},  Timeout {...}, Timeout {...} ]
 ***********************************************************************/
 
-function batchTimeouts(callbacks, delays) {
-  // Your code here
-}
+// method 1: iterative
+// function batchTimeouts(callbacks, delays) {
+// 	let objectsArr = [];
+// 	callbacks.forEach((cb, i) => {
+// 		objectsArr[i] = setTimeout(cb, delays[i]);
+// 	});
+// 	return objectsArr;
+// }
+
+// method 2: recursive
+// const batchTimeouts = (cbs, delays, objectsArr = []) => {
+// 	if (delays.length === 0) return objectsArr;
+
+// 	objectsArr.push(setTimeout(cbs[0], delays[0]));
+// 	return batchTimeouts(cbs.slice(1), delays.slice(1), objectsArr);
+// };
+
+// method 3: recursive option 2
+const batchTimeouts = (cbs, delays) => {
+	let ll = cbs.length;
+	if (delays.length === 0) return [];
+
+	let lasObj = batchTimeouts(cbs.slice(0, ll - 1), delays.slice(0, ll - 1));
+	let currObj = lasObj.concat(setTimeout(cbs[ll - 1], delays[ll - 1]));
+	return currObj;
+};
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS  LINE*****************/
 try {
-  module.exports = batchTimeouts;
+	module.exports = batchTimeouts;
 } catch {
-  module.exports = null;
+	module.exports = null;
 }
