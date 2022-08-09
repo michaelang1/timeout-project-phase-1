@@ -41,6 +41,12 @@ console.log(timeoutObjs); // [ Timeout {...},  Timeout {...}, Timeout {...} ]
 // 	return objectsArr;
 // }
 
+// ******************
+// * recursion approaches: both D1 and D2 directions are feasible because:
+// 1. the input argument can represent either beginning or end state;
+// 2. the modification of each step is predictable, repeatable and consistent.
+// ******************
+
 // method 2: recursive
 // const batchTimeouts = (cbs, delays, objectsArr = []) => {
 // 	if (delays.length === 0) return objectsArr;
